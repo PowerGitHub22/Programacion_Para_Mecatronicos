@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 /*Programa 4.1
 int cubo(void);
@@ -214,3 +215,85 @@ void main (void)
     printf("\nResultado 1: %d", r1);
     printf("\nResultado 2: %d", r2);
 }*/
+
+/*#define cant 10
+ void main (void)
+ {
+     int I, NUM, CUE = 0, SUMA;
+     float promedio;
+     int ARRE[cat];
+     for (I = 0; I<cant; I++)
+     {
+         printf("Ingrese el elemento %d del arreglo: ", I +1);
+         scanf("%d", &ARRE[I]);
+     }
+     printf("\n\nIngrese el número que se va a buscar en el arreglo: ", I+1);
+     scanf("%d", &NUM);
+     for(I = 0; I <cant; I++)
+     {
+         if (ARRE[I] == NUM)
+         {
+             CUE++;
+         }
+     }
+     printf("\n\nEl %d se encuetra %d veces en el arreglo", NUM, CUE);
+ }*/
+
+void Acutem (float);
+void Maxima(float, int);
+void Minima(float, int);
+
+float ACT = 0.0;
+float MAX = -50.0;
+float MIN = 60.0;
+int HMAX;
+int HMIN;
+
+void main(void)
+{
+    float TEM;
+    int I;
+    for (I = 1; I <= 24; I++)
+    {
+        printf("Ingresa la temperatura de la hora %d: ", I);
+        scanf("%f", &TEM);
+        Acutem(TEM);
+        Acutem(TEM);
+        Maxima(TEM, I);
+
+        Minima(TEM, I);
+    }
+    //printf("\nPromedio del día: %5.2f", (ACT / 24));
+    //printf("\nMáxima del día: %5.2f \tHora: %d", MAX, HMAX);
+    //printf("\nMínima del día: %5.2f \tHora: %d", MIN, HMIN);
+
+    for (I = 1; I <= 24; I++)
+    {
+        printf ("\n Temperatura: %f\t Hora: %i",ACT, HMAX);
+    }
+}
+/*void Acutem(float T)
+{
+    ACT += T;
+}*/
+
+void Maxima(float T, int H)
+
+{
+    if (MAX < T)
+    {
+        MAX = T;
+        HMAX = H;
+    }
+}
+
+void Minima(float T, int H)
+{
+    if (MIN > T)
+    {
+        MIN = T;
+        HMIN = H;
+    }
+}
+
+
