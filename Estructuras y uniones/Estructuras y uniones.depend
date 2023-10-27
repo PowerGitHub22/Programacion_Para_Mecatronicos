@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1698365792 source:c:\users\berny\onedrive\escritorio\jilber\mecatronica\semestre 5\programación para mecatronicos\ejercicios de programación\estructuras y uniones\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
