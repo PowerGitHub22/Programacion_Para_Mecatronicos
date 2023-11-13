@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1699906811 source:c:\users\berny\onedrive\escritorio\jilber\mecatronica\semestre 5\programación para mecatronicos\ejercicios de programación\practica en clase\loteriav2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
