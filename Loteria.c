@@ -43,7 +43,63 @@ void guardarEnHistorial(struct Historial historial[], int *contadorTiradas, int 
 
     (*contadorTiradas)++;
 }
+void realizarJugada(struct Historial historial[], int *contadorTiradas)
+{
+    int numero1, numero2, numero3, op2 = 0;
+    printf("¿Qué tipo de jugada deseas hacer?\n");
+    printf("1- Número\t2- Palé\t3- Tripleta: ");
+    scanf("%i", &op2);
 
+
+    if (op2 == 1)
+    {
+        printf("Indique su número: ");
+        scanf("%i", &numero1);
+        guardarEnHistorial(historial, contadorTiradas, numero1, 0, 0);
+    }
+    else if (op2 == 2)
+    {
+        printf("Indique los números: ");
+        scanf("%i %i", &numero1, &numero2);
+        guardarEnHistorial(historial, contadorTiradas, numero1, numero2, 0);
+    }
+    else if (op2 == 3)
+    {
+        printf("Indique los números: ");
+        scanf("%i %i %i", &numero1, &numero2, &numero3);
+        guardarEnHistorial(historial, contadorTiradas, numero1, numero2, numero3);
+    }
+
+    printf("\tTus números son: %d %d %d\n", historial[*contadorTiradas - 1].numero1, historial[*contadorTiradas - 1].numero2, historial[*contadorTiradas - 1].numero3);
+    printf("Hora y fecha actual: %02d:%02d:%02d %02d/%02d/%d\n",
+           historial[*contadorTiradas - 1].hora, historial[*contadorTiradas - 1].minuto, historial[*contadorTiradas - 1].segundo,
+           historial[*contadorTiradas - 1].dia, historial[*contadorTiradas - 1].mes, historial[*contadorTiradas - 1].anio);
+
+    // Comprobar si la jugada coincide con alguna tirada anterior en el historial
+    for (int i = 0; i < *contadorTiradas - 1; i++)
+    {
+        if (op2 == 1 && (numero1 == historial[i].numero1 || numero1 == historial[i].numero2 || numero1 == historial[i].numero3))
+        {
+
+            printf("\n¡Enhorabuena has ganado!\n");
+            return;
+        }
+        else if (op2 == 2 && ((numero1 == historial[i].numero1 && numero2 == historial[i].numero2) ||
+                              (numero1 == historial[i].numero2 && numero2 == historial[i].numero3) ||
+                              (numero1 == historial[i].numero3 && numero2 == historial[i].numero1)))
+        {
+            printf("\n¡Enhorabuena has ganado!\n");
+            return;
+        }
+        else if (op2 == 3 && (numero1 == historial[i].numero1 && numero2 == historial[i].numero2 && numero3 == historial[i].numero3))
+        {
+            printf("\n¡Enhorabuena has ganado!\n");
+            return;
+        }
+    }
+
+    printf("\nPerdiste\n");
+}
 void main()
 {
     srand(time(NULL));
@@ -52,7 +108,7 @@ void main()
         [100]; // Supongamos que almacenamos hasta 100 tiradas
     int contadorTiradas = 0;         // Contador para rastrear la cantidad de tiradas
     printf("\nIngrese la opción la acción requerida:\n ");
-    printf("0- Para salir\n1- Hacer la tirada\n2- Historial");
+    printf("0- Para salir\n1- Hacer la tirada\n2- Historial\n3- Jugar");
     scanf("%i", &opciones);
     fflush(stdin);
 
@@ -79,10 +135,15 @@ void main()
                 imprimirTirada(historial[i]);
             }
         }
+        else if (opciones == 3)
+        {
+            realizarJugada(historial, &contadorTiradas);
+        }
 
         printf("\nIngrese la opción la acción requerida:\n");
-        printf("0- Para salir\n1- Hacer la tirada\n2- Historial\n");
+        printf("0- Para salir\n1- Hacer la tirada\n2- Historial\n3- Jugar\n");
         scanf("%i", &opciones);
         fflush(stdin);
     }
 }
+
