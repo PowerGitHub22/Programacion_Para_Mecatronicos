@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#define premio1 10
+#define premio2 20
+#define premio3 30
 struct Historial
 {
     int numero1;
@@ -43,31 +46,47 @@ void guardarEnHistorial(struct Historial historial[], int *contadorTiradas, int 
 
     (*contadorTiradas)++;
 }
+
 void realizarJugada(struct Historial historial[], int *contadorTiradas)
 {
-    int numero1, numero2, numero3, op2 = 0;
-    printf("¿Qué tipo de jugada deseas hacer?\n");
-    printf("1- Número\t2- Palé\t3- Tripleta: ");
+    int numeros[3], numerosAleatorios[3], op2 = 0, monto;
+    printf("¿Que tipo de jugada deseas hacer?\n");
+    printf("1- Numero\t2- Pale\t3- Tripleta: ");
     scanf("%i", &op2);
+    printf("Indique el monto a jugar: $");
+    scanf("%i", &monto);
 
-
-    if (op2 == 1)
+    // Validar la opción ingresada por el usuario
+    if (op2 < 1 || op2 > 3)
     {
+        printf("Opción no válida. Debes seleccionar 1, 2 o 3.\n");
+        return;
+    }
+
+    // Generar números aleatorios
+    for (int i = 0; i < op2; i++)
+    {
+        numerosAleatorios[i] = rand() % 100;
+    }
+
+    // Obtener los números según la opción seleccionada
+    switch (op2)
+    {
+    case 1:
         printf("Indique su número: ");
-        scanf("%i", &numero1);
-        guardarEnHistorial(historial, contadorTiradas, numero1, 0, 0);
-    }
-    else if (op2 == 2)
-    {
+        scanf("%i", &numeros[0]);
+        guardarEnHistorial(historial, contadorTiradas, numeros[0], 0, 0);
+        break;
+    case 2:
         printf("Indique los números: ");
-        scanf("%i %i", &numero1, &numero2);
-        guardarEnHistorial(historial, contadorTiradas, numero1, numero2, 0);
-    }
-    else if (op2 == 3)
-    {
+        scanf("%i %i", &numeros[0], &numeros[1]);
+        guardarEnHistorial(historial, contadorTiradas, numeros[0], numeros[1], 0);
+        break;
+    case 3:
         printf("Indique los números: ");
-        scanf("%i %i %i", &numero1, &numero2, &numero3);
-        guardarEnHistorial(historial, contadorTiradas, numero1, numero2, numero3);
+        scanf("%i %i %i", &numeros[0], &numeros[1], &numeros[2]);
+        guardarEnHistorial(historial, contadorTiradas, numeros[0], numeros[1], numeros[2]);
+        break;
     }
 
     printf("\tTus números son: %d %d %d\n", historial[*contadorTiradas - 1].numero1, historial[*contadorTiradas - 1].numero2, historial[*contadorTiradas - 1].numero3);
@@ -75,30 +94,29 @@ void realizarJugada(struct Historial historial[], int *contadorTiradas)
            historial[*contadorTiradas - 1].hora, historial[*contadorTiradas - 1].minuto, historial[*contadorTiradas - 1].segundo,
            historial[*contadorTiradas - 1].dia, historial[*contadorTiradas - 1].mes, historial[*contadorTiradas - 1].anio);
 
-    // Comprobar si la jugada coincide con alguna tirada anterior en el historial
-    for (int i = 0; i < *contadorTiradas - 1; i++)
+    // Comprobar si la jugada coincide con los números aleatorios generados
+    int coincidencias = 0;
+    for (int i = 0; i < op2; i++)
     {
-        if (op2 == 1 && (numero1 == historial[i].numero1 || numero1 == historial[i].numero2 || numero1 == historial[i].numero3))
+        for (int j = 0; j < op2; j++)
         {
-
-            printf("\n¡Enhorabuena has ganado!\n");
-            return;
-        }
-        else if (op2 == 2 && ((numero1 == historial[i].numero1 && numero2 == historial[i].numero2) ||
-                              (numero1 == historial[i].numero2 && numero2 == historial[i].numero3) ||
-                              (numero1 == historial[i].numero3 && numero2 == historial[i].numero1)))
-        {
-            printf("\n¡Enhorabuena has ganado!\n");
-            return;
-        }
-        else if (op2 == 3 && (numero1 == historial[i].numero1 && numero2 == historial[i].numero2 && numero3 == historial[i].numero3))
-        {
-            printf("\n¡Enhorabuena has ganado!\n");
-            return;
+            if (numeros[i] == numerosAleatorios[j])
+            {
+                coincidencias++;
+                break;
+            }
         }
     }
 
-    printf("\nPerdiste\n");
+    if (coincidencias == op2)
+    {
+        monto *= (op2 == 1) ? premio1 : ((op2 == 2) ? premio2 : premio3);
+        printf("\n¡Enhorabuena has ganado! Su monto es: $%i\n", monto);
+    }
+    else
+    {
+        printf("\nPerdiste\n");
+    }
 }
 void main()
 {
@@ -107,8 +125,9 @@ void main()
     struct Historial historial
         [100]; // Supongamos que almacenamos hasta 100 tiradas
     int contadorTiradas = 0;         // Contador para rastrear la cantidad de tiradas
+
     printf("\nIngrese la opción la acción requerida:\n ");
-    printf("0- Para salir\n1- Hacer la tirada\n2- Historial\n3- Jugar");
+    printf("0- Para salir\n1- Hacer la tirada\n2- Historial\n3- Jugada \n");
     scanf("%i", &opciones);
     fflush(stdin);
 
@@ -141,7 +160,7 @@ void main()
         }
 
         printf("\nIngrese la opción la acción requerida:\n");
-        printf("0- Para salir\n1- Hacer la tirada\n2- Historial\n3- Jugar\n");
+        printf("0- Para salir\n1- Hacer la tirada\n2- Historial\n3- Jugada \n");
         scanf("%i", &opciones);
         fflush(stdin);
     }
