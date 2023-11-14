@@ -16,7 +16,7 @@ struct Historial
 
 void imprimirTirada(struct Historial tirada)
 {
-    printf("N鷐eros: %d %d %d\t", tirada.numero1, tirada.numero2, tirada.numero3);
+    printf("N煤meros: %d %d %d\t", tirada.numero1, tirada.numero2, tirada.numero3);
     printf("Fecha y hora: %02d/%02d/%d %02d:%02d:%02d\n",
            tirada.dia, tirada.mes, tirada.anio, tirada.hora, tirada.minuto, tirada.segundo);
 }
@@ -51,7 +51,7 @@ void main()
     struct Historial historial
         [100]; // Supongamos que almacenamos hasta 100 tiradas
     int contadorTiradas = 0;         // Contador para rastrear la cantidad de tiradas
-    printf("\nIngrese la opci髇 la acci髇 requerida:\n ");
+    printf("\nIngrese la opci贸n la acci贸n requerida:\n ");
     printf("0- Para salir\n1- Hacer la tirada\n2- Historial");
     scanf("%i", &opciones);
     fflush(stdin);
@@ -60,14 +60,14 @@ void main()
     {
         if (opciones == 1)
         {
-            // Generar tres n鷐eros aleatorios y almacenarlos en el historial (rango: 00-99)
+            // Generar tres n煤meros aleatorios y almacenarlos en el historial (rango: 00-99)
             int PrimerNumero = rand() % 100;
             int SegundoNumero = rand() % 100;
             int TercerNumero = rand() % 100;
 
             guardarEnHistorial(historial, &contadorTiradas, PrimerNumero, SegundoNumero, TercerNumero);
 
-            printf("\tTus n鷐eros son: %d %d %d\n", PrimerNumero, SegundoNumero, TercerNumero);
+            printf("\tTus n煤meros son: %d %d %d\n", PrimerNumero, SegundoNumero, TercerNumero);
             printf("Hora y fecha actual: %02d:%02d:%02d %02d/%02d/%d\n",
                    historial[contadorTiradas - 1].hora, historial[contadorTiradas - 1].minuto, historial[contadorTiradas - 1].segundo,
                    historial[contadorTiradas - 1].dia, historial[contadorTiradas - 1].mes, historial[contadorTiradas - 1].anio);
@@ -80,7 +80,7 @@ void main()
             }
         }
 
-        printf("\nIngrese la opci髇 la acci髇 requerida:\n");
+        printf("\nIngrese la opci贸n la acci贸n requerida:\n");
         printf("0- Para salir\n1- Hacer la tirada\n2- Historial\n");
         scanf("%i", &opciones);
         fflush(stdin);
